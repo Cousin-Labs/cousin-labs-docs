@@ -658,12 +658,18 @@
   .preface-grid {
     display: flex; border: 1px solid #d2d2d7; border-radius: 6px; overflow: hidden;
   }
-  .preface-col { flex: 1; padding: 16px 20px; }
+  .preface-col { flex: 1; display: flex; flex-direction: column; }
   .preface-col:not(:last-child) { border-right: 1px solid #d2d2d7; }
+  .preface-col-header {
+    padding: 10px 16px;
+    background: #f5f5f7;
+    border-bottom: 1px solid #d2d2d7;
+  }
   .preface-col-label {
     font-size: 10px; font-weight: 700; text-transform: uppercase;
-    letter-spacing: 0.08em; margin-bottom: 12px;
+    letter-spacing: 0.08em;
   }
+  .preface-col-body { padding: 14px 16px; }
   .preface-live { color: #166534; }
   .preface-blocked { color: #92400e; }
   .preface-item {
@@ -689,28 +695,34 @@
   <div class="preface-body">Claude can read Google Sheets fine. Writing back is a different story: API issues, schema mismatches, slow feedback loop. The fix was always generate a new file — which turned into a pile of versioned artifacts nobody could find. Notion solves the write side. One record, updated in place, team-facing and queryable like the repo.</div>
   <div class="preface-grid">
     <div class="preface-col">
-      <div class="preface-col-label preface-live">Live in Notion</div>
-      <div class="preface-item">Speak Paid Testing Tracker — all ads launched, testing phases, debrief linked</div>
-      <div class="preface-item">Debriefs DB — 20 records linked to Testing Tracker by CL ID</div>
-      <div class="preface-item">Weekly KPI Log — running log, newest at top</div>
-      <div class="preface-item">Creator Roster + Recruitment DB</div>
-      <div class="preface-item">Scrape + classification pipeline (viral.app → Gemini → data)</div>
+      <div class="preface-col-header"><div class="preface-col-label preface-live">Live in Notion</div></div>
+      <div class="preface-col-body">
+        <div class="preface-item">Speak Paid Testing Tracker — all ads launched, testing phases, debrief linked</div>
+        <div class="preface-item">Debriefs DB — 20 records linked to Testing Tracker by CL ID</div>
+        <div class="preface-item">Weekly KPI Log — running log, newest at top</div>
+        <div class="preface-item">Creator Roster + Recruitment DB</div>
+        <div class="preface-item">Scrape + classification pipeline (viral.app → Gemini → data)</div>
+      </div>
     </div>
     <div class="preface-col">
-      <div class="preface-col-label preface-blocked">Blocked without Notion build</div>
-      <div class="preface-item">Brief IDs — Concepts DB doesn't exist yet</div>
-      <div class="preface-item">CL ID → Brief marriage — no record to write to</div>
-      <div class="preface-item">Producer views — team navigates in chat, not a dashboard</div>
-      <div class="preface-item">Cross-session debrief learning — verdicts don't accumulate</div>
-      <div class="preface-item">Ladder expansion — same DBs, filtered views not built</div>
+      <div class="preface-col-header"><div class="preface-col-label preface-blocked">Blocked without Notion build</div></div>
+      <div class="preface-col-body">
+        <div class="preface-item">Brief IDs — Concepts DB doesn't exist yet</div>
+        <div class="preface-item">CL ID → Brief marriage — no record to write to</div>
+        <div class="preface-item">Producer views — team navigates in chat, not a dashboard</div>
+        <div class="preface-item">Cross-session debrief learning — verdicts don't accumulate</div>
+        <div class="preface-item">Ladder expansion — same DBs, filtered views not built</div>
+      </div>
     </div>
     <div class="preface-col">
-      <div class="preface-col-label" style="color:#1d1d1f;">What's next</div>
-      <div class="preface-item">Concepts DB — pitching, approvals, PM layer</div>
-      <div class="preface-item">Concept rationale → performance reporting → next brief, in one place</div>
-      <div class="preface-item">Cross-team application if paid + organic are treated as one content program</div>
-      <div class="preface-item">July goal: production tracking moves from Sheets to Notion (Speak pilot, Ladder dated to follow)</div>
-      <div class="preface-item">IRL NYC workshop to finalize DB structure with the team</div>
+      <div class="preface-col-header"><div class="preface-col-label" style="color:#1d1d1f;">What's next</div></div>
+      <div class="preface-col-body">
+        <div class="preface-item">Concepts DB — pitching, approvals, PM layer</div>
+        <div class="preface-item">Concept rationale → performance reporting → next brief, in one place</div>
+        <div class="preface-item">Cross-team application if paid + organic are treated as one content program</div>
+        <div class="preface-item">July goal: production tracking moves from Sheets to Notion (Speak pilot, Ladder dated to follow)</div>
+        <div class="preface-item">IRL NYC workshop to finalize DB structure with the team</div>
+      </div>
     </div>
   </div>
 </div>
