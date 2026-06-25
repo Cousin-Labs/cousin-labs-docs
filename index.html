@@ -1,0 +1,1305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cousin Labs — Notion Pitch</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f8f9fb;
+    --surface: #ffffff;
+    --border: #e2e8f0;
+    --text: #0f172a;
+    --text-secondary: #64748b;
+    --radius: 12px;
+  }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding: 32px 40px;
+    max-width: 960px;
+    margin: 0 auto;
+  }
+
+  /* ── Header ── */
+  .page-header {
+    margin-bottom: 36px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .page-title { font-size: 22px; font-weight: 800; letter-spacing: -0.03em; }
+  .page-sub   { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+  .page-date  { font-size: 12px; color: var(--text-secondary); }
+
+  /* ── Section ── */
+  .section {
+    background: var(--surface);
+    border-radius: var(--radius);
+    border: 1px solid var(--border);
+    padding: 28px 28px 24px;
+    margin-bottom: 24px;
+  }
+  .section-title {
+    font-size: 13px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-secondary); margin-bottom: 20px;
+  }
+
+  /* ═══════════════════════════════
+     SECTION 1 — SIMPLE METAPHOR
+  ═══════════════════════════════ */
+  .metaphor-row {
+    display: flex;
+    gap: 0;
+    align-items: stretch;
+  }
+
+  .m-layer {
+    flex: 1;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+  }
+
+  .m-header {
+    padding: 14px 16px 10px;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .m-icon  { font-size: 24px; }
+  .m-role  { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+  .m-title { font-size: 13px; font-weight: 700; }
+  .m-body  { padding: 0 14px 12px; font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+
+  .m-sublabel {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; padding: 6px 14px 4px; color: var(--text-secondary);
+  }
+  .skill-chips { display: flex; flex-wrap: wrap; gap: 4px; padding: 0 14px 12px; }
+  .skill-chip  {
+    background: rgba(0,0,0,0.06); border-radius: 4px; padding: 2px 7px;
+    font-size: 10px; font-weight: 600; color: #444;
+  }
+
+  .m-connector {
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 0 4px; min-width: 44px;
+  }
+  .m-conn-line {
+    flex: 1; width: 1px; background: var(--border); min-height: 20px;
+    position: relative;
+  }
+  .m-conn-line::after {
+    content: ''; position: absolute; bottom: -1px; left: -4px;
+    border-top: 7px solid var(--border);
+    border-left: 4px solid transparent;
+    border-right: 4px solid transparent;
+  }
+  .m-conn-label {
+    font-size: 9px; color: var(--text-secondary); writing-mode: vertical-lr;
+    text-orientation: mixed; padding: 6px 0; letter-spacing: 0.05em;
+  }
+
+  .m-repo    { background: #f8f8f8; }
+  .m-repo    .m-header { background: #f0f0f0; }
+  .m-repo    .m-role   { color: #888; }
+
+  .m-claude  { background: #fef5fb; }
+  .m-claude  .m-header { background: #fce8f3; }
+  .m-claude  .m-role   { color: #b0006c; }
+
+  .m-notion  { background: #f0fdf8; }
+  .m-notion  .m-header { background: #e8faf0; }
+  .m-notion  .m-role   { color: #14532d; }
+
+  .metaphor-note {
+    margin-top: 16px; text-align: center;
+    font-size: 11px; color: var(--text-secondary); font-style: italic;
+  }
+
+  /* ═══ SECTION 1 REDESIGN ═══ */
+  .sys-row {
+    display: flex;
+    align-items: stretch;
+    gap: 0;
+  }
+  .sys-node { flex: 1; }
+  .sys-connector {
+    flex-shrink: 0;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    align-self: center;
+    padding: 0 2px;
+  }
+  .sys-conn-label {
+    font-size: 9px;
+    color: var(--text-secondary);
+    text-align: center;
+    letter-spacing: 0.04em;
+    line-height: 1.3;
+  }
+
+  /* ═══════════════════════════════
+     SECTION 2 — PRODUCER WORKFLOW
+  ═══════════════════════════════ */
+  .workflow-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .wf-step {
+    border-radius: 10px;
+    padding: 14px 16px;
+    border: 1px solid var(--border);
+  }
+
+  .badge {
+    display: inline-block;
+    font-size: 9px; font-weight: 700; padding: 2px 7px;
+    border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;
+    margin-bottom: 6px;
+  }
+  .badge-human { background: #fce8f3; color: #b0006c; }
+  .badge-ai    { background: #e8f0fe; color: #1a56db; }
+  .badge-both  { background: #fff3e0; color: #b05a00; }
+
+  .wf-title { font-size: 12px; font-weight: 700; margin-bottom: 4px; }
+  .wf-body  { font-size: 11px; color: var(--text-secondary); line-height: 1.5; }
+
+  .db-chips { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 7px; }
+  .db-chip  {
+    background: rgba(0,0,0,0.05); border-radius: 4px; padding: 2px 7px;
+    font-size: 10px; font-weight: 600; color: #555;
+  }
+
+  .s-brief    { background: #f5f0ff; border-color: #c4b5fd; }
+  .s-cast     { background: #eff6ff; border-color: #bfdbfe; }
+  .s-deliver  { background: #f0fdf4; border-color: #bbf7d0; }
+  .s-classify { background: #ecfdf5; border-color: #99f6e4; }
+  .s-debrief  { background: #fffbeb; border-color: #fde68a; }
+  .s-strat    { background: #fdf4ff; border-color: #e9d5ff; }
+
+  .wf-arrow-row {
+    grid-column: 1 / -1;
+    text-align: center;
+    font-size: 14px;
+    color: var(--border);
+    padding: 2px 0;
+  }
+
+  /* ═══════════════════════════════
+     SECTION 3 — NOTION DB MAP
+  ═══════════════════════════════ */
+  .db-canvas {
+    position: relative;
+    width: 100%;
+    height: 700px;
+  }
+
+  .db-card {
+    position: absolute;
+    border-radius: 10px;
+    border: 1.5px solid;
+    width: 190px;
+    font-size: 11px;
+    overflow: hidden;
+  }
+
+  .card-head {
+    padding: 9px 12px 7px;
+    display: flex; flex-direction: column; gap: 2px;
+  }
+  .card-badge-label {
+    font-size: 8px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 2px;
+  }
+  .card-name { font-size: 12px; font-weight: 700; }
+  .card-desc { font-size: 10px; opacity: 0.75; line-height: 1.3; margin-top: 2px; }
+
+  .card-fields { padding: 7px 12px 10px; display: flex; flex-wrap: wrap; gap: 3px; }
+  .f { display: inline-block; background: rgba(0,0,0,0.06); border-radius: 4px; padding: 2px 7px; font-size: 10px; font-weight: 500; color: #444; }
+  .f.fk { background: #dbeafe; color: #1e40af; font-weight: 600; }
+  .f.ai { background: #fce7f3; color: #9d174d; }
+
+  /* card themes */
+  .c-roster { border-color: #334155; }
+  .c-roster .card-head { background: #1e293b; color: #f1f5f9; }
+  .c-roster .card-badge-label { color: #94a3b8; }
+  .c-roster .card-desc { color: #94a3b8; }
+  .c-roster .card-fields { background: #0f172a; }
+  .c-roster .f { background: rgba(255,255,255,0.1); color: #cbd5e1; }
+
+  .c-concept { border-color: #6366f1; }
+  .c-concept .card-head { background: #e0e7ff; color: #3730a3; }
+  .c-concept .card-badge-label { color: #6366f1; }
+  .c-concept .card-fields { background: #eef2ff; }
+
+  .c-testing { border-color: #7c3aed; }
+  .c-testing .card-head { background: #ede9fe; color: #4c1d95; }
+  .c-testing .card-badge-label { color: #7c3aed; }
+  .c-testing .card-fields { background: #f5f3ff; }
+
+  .c-debrief { border-color: #d97706; }
+  .c-debrief .card-head { background: #fef3c7; color: #78350f; }
+  .c-debrief .card-badge-label { color: #d97706; }
+  .c-debrief .card-fields { background: #fffbeb; }
+
+  .c-engage { border-color: #dc2626; }
+  .c-engage .card-head { background: #fee2e2; color: #7f1d1d; }
+  .c-engage .card-badge-label { color: #dc2626; }
+  .c-engage .card-fields { background: #fff1f2; }
+
+  .c-recruit { border-color: #ea580c; }
+  .c-recruit .card-head { background: #ffedd5; color: #7c2d12; }
+  .c-recruit .card-badge-label { color: #ea580c; }
+  .c-recruit .card-fields { background: #fff7ed; }
+
+  .c-brand { border-color: #9ca3af; }
+  .c-brand .card-head { background: #f3f4f6; color: #374151; }
+  .c-brand .card-fields { background: #f9fafb; }
+
+  .conn-svg {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none; overflow: visible;
+  }
+  .cl { stroke: #cbd5e1; stroke-width: 1.5; fill: none; }
+  .cd { stroke: #cbd5e1; stroke-width: 1.5; fill: none; stroke-dasharray: 4,3; }
+  .ct { font-size: 9px; fill: #9ca3af; font-weight: 600; font-family: -apple-system, sans-serif; }
+
+  .views-section { margin-top: 16px; }
+  .views-label  { font-size: 9px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #9ca3af; margin-bottom: 6px; }
+  .views-row    { display: flex; gap: 8px; }
+  .view-chip    { background: #1e293b; color: #f1f5f9; border-radius: 6px; padding: 5px 12px; font-size: 11px; font-weight: 600; }
+
+  /* ═══ SECTION 4 DB MAP REDESIGN ═══ */
+  .db-layout .db-card { position: static; width: auto; }
+
+  /* 5-column: content | arrow | content | arrow | content */
+  .db-5col { display: flex; align-items: stretch; gap: 0; }
+
+  /* content columns — equal flex, same card width */
+  .db-c1, .db-c3, .db-c5 {
+    flex: 1; min-width: 0;
+    display: flex; flex-direction: column;
+  }
+  .db-c1 .db-card, .db-c3 .db-card, .db-c5 .db-card { width: 100%; }
+
+  /* col 1: Recruitment centered */
+  .db-c1 { justify-content: center; }
+
+  /* col 3: Roster + views centered */
+  .db-c3 { justify-content: center; }
+  .db-c3 > * { width: 100%; }
+
+  /* arrow-only columns */
+  .db-c2, .db-c4 {
+    flex-shrink: 0; width: 44px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 5px;
+  }
+  .db-carr-label {
+    font-size: 9px; color: var(--text-secondary);
+    text-align: center; letter-spacing: 0.04em; line-height: 1.3;
+  }
+
+  /* dotted line Roster → views */
+  .db-vdash { width: 1px; height: 16px; border-left: 1.5px dashed #cbd5e1; margin: 4px auto; }
+
+  /* views block */
+  .db-views-block {
+    border: 1.5px dashed #cbd5e1; border-radius: 8px;
+    padding: 8px 10px; background: rgba(0,0,0,0.02);
+  }
+  .db-views-label-sm {
+    font-size: 8px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: #9ca3af; margin-bottom: 5px;
+  }
+  .db-views-row-sm { display: flex; flex-wrap: wrap; gap: 4px; }
+  .db-view-chip-sm {
+    background: #1e293b; color: #f1f5f9; border-radius: 5px;
+    padding: 3px 8px; font-size: 10px; font-weight: 600;
+  }
+
+  /* col 5: paid pipeline divider + vertical connectors */
+  .db-col3-divider {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-secondary);
+    padding: 10px 0 6px; margin-top: 10px;
+    border-top: 1px solid var(--border);
+  }
+  .db-col3-v-conn {
+    display: flex; flex-direction: column; align-items: flex-start;
+    padding-left: 16px; padding-top: 2px; padding-bottom: 2px; gap: 1px;
+  }
+  .db-col3-v-line { width: 1px; height: 12px; background: #cbd5e1; }
+  .db-col3-v-label { font-size: 9px; color: var(--text-secondary); letter-spacing: 0.04em; }
+
+  /* ═══════════════════════════════
+     SECTION 4 — ADAPTER
+  ═══════════════════════════════ */
+  .spine-bar {
+    background: #0f172a; color: #f1f5f9;
+    border-radius: 10px; padding: 16px 20px;
+    text-align: center; margin-bottom: 10px;
+  }
+  .spine-bar-title { font-size: 14px; font-weight: 700; margin-bottom: 8px; }
+  .spine-pills { display: flex; flex-wrap: wrap; gap: 6px; justify-content: center; }
+  .spine-pill  { background: rgba(255,255,255,0.1); border-radius: 6px; padding: 4px 10px; font-size: 10px; color: rgba(255,255,255,0.75); }
+  .adapter-arrow { text-align: center; font-size: 18px; color: #cbd5e1; margin: 6px 0; }
+
+  .adapter-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; }
+  .adapter-card { border-radius: 10px; border: 1.5px solid; padding: 14px; }
+  .adapter-title { font-size: 13px; font-weight: 700; margin-bottom: 8px; }
+  .adapter-item { font-size: 11px; color: var(--text-secondary); padding: 2px 0; display: flex; gap: 5px; line-height: 1.4; }
+  .adapter-item::before { content: '·'; color: #bbb; flex-shrink: 0; }
+  .warn { color: #d97706; font-weight: 600; }
+
+  .status-pill {
+    display: inline-block; font-size: 9px; font-weight: 700; padding: 2px 8px;
+    border-radius: 10px; text-transform: uppercase; letter-spacing: 0.05em; margin-top: 8px;
+  }
+  .s-live   { background: #dcfce7; color: #14532d; }
+  .s-build  { background: #fef9c3; color: #713f12; }
+  .s-future { background: #f3f4f6; color: #6b7280; }
+
+  .ad-speak  { border-color: #c7d7fe; background: #f5f8ff; }
+  .ad-speak  .adapter-title { color: #1e40af; }
+  .ad-ladder { border-color: #bbf7d0; background: #f0fdf4; }
+  .ad-ladder .adapter-title { color: #14532d; }
+  .ad-jrb    { border-color: #e9d5ff; background: #faf5ff; }
+  .ad-jrb    .adapter-title { color: #581c87; }
+
+  .adapter-section-label {
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; color: var(--text-secondary);
+    margin: 9px 0 4px; padding-top: 8px;
+    border-top: 1px solid rgba(0,0,0,0.07);
+  }
+  .adapter-section-label:first-of-type { margin-top: 0; padding-top: 0; border-top: none; }
+
+  .adapter-note {
+    margin-top: 10px; background: #fffbeb; border: 1px solid #fde68a;
+    border-radius: 8px; padding: 10px 14px;
+    font-size: 11px; color: #7c4a00; line-height: 1.6;
+  }
+
+  /* ═══ AD DATA FLOW ═══ */
+  .adf-wrap { display: flex; flex-direction: column; gap: 16px; }
+
+  .adf-row {
+    display: flex; align-items: stretch; gap: 0;
+  }
+
+  .adf-node {
+    flex: 1;
+    min-width: 0;
+    display: flex; flex-direction: column;
+    align-items: center; text-align: center;
+    border-radius: 10px;
+    border: 1.5px solid var(--border);
+    overflow: hidden;
+  }
+
+  /* Top section: icon + label + desc */
+  .adf-top {
+    flex: 1;
+    display: flex; flex-direction: column; align-items: center;
+    padding: 12px 6px 8px;
+    width: 100%;
+  }
+
+  .adf-icon  { font-size: 20px; margin-bottom: 5px; flex-shrink: 0; }
+  .adf-label { font-size: 11px; font-weight: 700; color: var(--text); margin-bottom: 4px; line-height: 1.3; }
+  .adf-sub   { font-size: 10px; color: var(--text-secondary); line-height: 1.4; }
+
+  /* RACI strip */
+  .adf-raci {
+    width: 100%;
+    padding: 4px 6px;
+    font-size: 9px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.05em; text-align: center;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+  .raci-ai    { background: #fce7f3; color: #9d174d; }
+  .raci-human { background: #f0fdf4; color: #14532d; }
+  .raci-both  { background: #fff3e0; color: #b05a00; }
+
+  /* DB strip */
+  .adf-db {
+    width: 100%;
+    padding: 4px 6px;
+    font-size: 9px; font-weight: 600; text-align: center;
+    background: rgba(0,0,0,0.04);
+    color: #555;
+    border-top: 1px solid rgba(0,0,0,0.06);
+  }
+
+  .adf-arrow {
+    flex-shrink: 0;
+    display: flex; align-items: center; justify-content: center;
+    padding: 0 2px; font-size: 16px; color: #cbd5e1;
+    align-self: center;
+  }
+
+  /* node accent colors */
+  .adf-insights { border-color: #99f6e4; background: #f0fdfa; }
+  .adf-brief   { border-color: #c7d7fe; background: #eef2ff; }
+  .adf-asset   { border-color: #bbf7d0; background: #f0fdf4; }
+  .adf-tag     { border-color: #f9a8d4; background: #fdf2f8; }
+  .adf-launch  { border-color: #fde68a; background: #fffbeb; }
+  .adf-perf    { border-color: #a5b4fc; background: #eef2ff; }
+  .adf-debrief { border-color: #f9a8d4; background: #fdf2f8; }
+
+  /* return loop */
+  .adf-return-wrap {
+    display: flex; align-items: center; gap: 10px;
+  }
+  .adf-return-line {
+    flex: 1; height: 1px; background: var(--border);
+  }
+  .adf-return-label {
+    font-size: 10px; color: var(--text-secondary); font-style: italic;
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  /* data spine row */
+  .adf-spine-row {
+    display: flex; align-items: center; gap: 10px;
+    background: #f8f9fb; border-radius: 8px; padding: 10px 14px;
+    border: 1px solid var(--border);
+  }
+  .adf-spine-label {
+    font-size: 10px; font-weight: 700; color: var(--text-secondary);
+    text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; flex-shrink: 0;
+  }
+  .adf-spine-chips { display: flex; flex-wrap: wrap; gap: 5px; }
+  .adf-chip {
+    background: #fff; border: 1px solid var(--border); border-radius: 4px;
+    padding: 2px 8px; font-size: 10px; font-weight: 500; color: var(--text);
+  }
+
+  /* ═══ NEXT STEPS ═══ */
+  .steps-wrap { display: flex; flex-direction: column; gap: 0; }
+
+  .step-row {
+    display: flex; gap: 16px; align-items: flex-start;
+    padding: 16px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .step-row:last-child { border-bottom: none; }
+
+  .step-num {
+    flex-shrink: 0;
+    width: 28px; height: 28px;
+    background: var(--text); color: #fff;
+    border-radius: 50%;
+    font-size: 12px; font-weight: 700;
+    display: flex; align-items: center; justify-content: center;
+    margin-top: 1px;
+  }
+
+  .step-body { flex: 1; }
+  .step-title { font-size: 13px; font-weight: 700; margin-bottom: 5px; }
+  .step-desc  { font-size: 11px; color: var(--text-secondary); line-height: 1.6; margin-bottom: 8px; }
+
+  .step-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+  .stag {
+    display: inline-block; font-size: 9px; font-weight: 700;
+    padding: 2px 7px; border-radius: 4px; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .stag-notion  { background: #e0e7ff; color: #3730a3; }
+  .stag-design  { background: #f3f4f6; color: #374151; }
+  .stag-process { background: #fef3c7; color: #78350f; }
+  .stag-human   { background: #fce7f3; color: #9d174d; }
+  .stag-decision{ background: #fef9c3; color: #713f12; }
+  .stag-speak   { background: #dbeafe; color: #1e40af; }
+  .stag-ladder  { background: #dcfce7; color: #14532d; }
+  .stag-build   { background: #f0fdf4; color: #166534; }
+  .stag-ai      { background: #fce7f3; color: #9d174d; }
+  .stag-risk    { background: #fee2e2; color: #7f1d1d; }
+  .stag-legal   { background: #fef3c7; color: #78350f; }
+  .stag-paul    { background: #ede9fe; color: #4c1d95; }
+
+  /* ═══ TRIANGLE LAYOUT ═══ */
+  .tri-wrap { position: relative; }
+
+  .tri-svg {
+    position: absolute; top: 0; left: 0;
+    width: 100%; height: 100%;
+    pointer-events: none;
+  }
+
+  .tri-nodes { display: flex; flex-direction: column; gap: 0; }
+
+  .tri-top {
+    display: flex; align-items: flex-end;
+    gap: 0; justify-content: space-between;
+    margin-bottom: 16px;
+  }
+
+  .tri-spacer { flex: 1; }
+
+  .tri-bottom {
+    display: flex; justify-content: center;
+  }
+
+  .tri-node { width: 260px; }
+
+  .tri-claude { width: 320px; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center; font-size: 11px; color: var(--text-secondary);
+    margin-top: 32px; padding-top: 20px; border-top: 1px solid var(--border);
+  }
+
+  /* ══════════════════════════════════════════════════════
+     VISUAL REFRESH — NEUTRAL PALETTE
+     Strip decorative color. Semantic color only:
+     .f.fk (relational links), .f.ai (Claude fields),
+     status pills (Active/In Build/Future),
+     and two accent colors on the preface labels.
+  ══════════════════════════════════════════════════════ */
+
+  :root {
+    --bg: #f5f5f7;
+    --surface: #ffffff;
+    --border: #d2d2d7;
+    --text: #1d1d1f;
+    --text-secondary: #6e6e73;
+    --radius: 12px;
+  }
+
+  body { background: var(--bg); }
+
+  /* Section 1 — m-layer cards */
+  .m-repo, .m-claude, .m-notion { background: #fff; }
+  .m-repo .m-header, .m-claude .m-header, .m-notion .m-header { background: #f5f5f7; }
+  .m-repo .m-role, .m-notion .m-role { color: #6e6e73; }
+  .m-claude .m-role { color: #1d1d1f; font-weight: 800; }
+  .skill-chip { background: rgba(0,0,0,0.05); color: #3a3a3c; }
+
+  /* Section 2 — adf flow nodes + RACI strips */
+  .adf-insights, .adf-brief, .adf-asset, .adf-tag,
+  .adf-launch, .adf-perf, .adf-debrief { border-color: #d2d2d7; background: #fff; }
+  .raci-ai, .raci-human, .raci-both { background: rgba(0,0,0,0.04); color: #3a3a3c; }
+
+  /* Section 3 — workflow steps + badges */
+  .s-brief, .s-cast, .s-deliver, .s-classify, .s-debrief, .s-strat {
+    background: #fff; border-color: #d2d2d7;
+  }
+  .badge-human, .badge-ai, .badge-both { background: rgba(0,0,0,0.05); color: #3a3a3c; }
+
+  /* Section 4 — DB cards */
+  .c-roster, .c-concept, .c-testing, .c-debrief,
+  .c-engage, .c-recruit, .c-brand { border-color: #d2d2d7; }
+  .c-roster .card-head, .c-concept .card-head, .c-testing .card-head,
+  .c-debrief .card-head, .c-engage .card-head, .c-recruit .card-head, .c-brand .card-head {
+    background: #f5f5f7; color: #1d1d1f;
+  }
+  .c-roster .card-badge-label, .c-concept .card-badge-label, .c-testing .card-badge-label,
+  .c-debrief .card-badge-label, .c-engage .card-badge-label, .c-recruit .card-badge-label,
+  .c-brand .card-badge-label { color: #6e6e73; }
+  .c-roster .card-desc, .c-concept .card-desc, .c-testing .card-desc,
+  .c-debrief .card-desc, .c-engage .card-desc, .c-recruit .card-desc { color: #6e6e73; }
+  .c-roster .card-fields, .c-concept .card-fields, .c-testing .card-fields,
+  .c-debrief .card-fields, .c-engage .card-fields, .c-recruit .card-fields,
+  .c-brand .card-fields { background: #fff; }
+  /* neutralize base field chip; preserve .f.fk and .f.ai specificity */
+  .f { background: rgba(0,0,0,0.04); color: #3a3a3c; }
+  .c-roster .f { background: rgba(0,0,0,0.04); color: #3a3a3c; }
+
+  /* Section 5 — spine bar + adapter cards + adapter note */
+  .spine-bar { background: #1d1d1f; }
+  .ad-speak, .ad-ladder, .ad-jrb { border-color: #d2d2d7; background: #fff; }
+  .ad-speak .adapter-title, .ad-ladder .adapter-title, .ad-jrb .adapter-title { color: #1d1d1f; }
+  .adapter-note { background: #f5f5f7; border-color: #d2d2d7; color: #6e6e73; }
+
+  /* Section 6 — step tags (all neutral) */
+  .stag-notion, .stag-design, .stag-process, .stag-human, .stag-decision,
+  .stag-speak, .stag-ladder, .stag-build, .stag-ai, .stag-risk, .stag-legal, .stag-paul {
+    background: rgba(0,0,0,0.04); color: #3a3a3c;
+  }
+
+  /* ── Preface block ── */
+  .preface-headline {
+    font-size: 21px; font-weight: 700; letter-spacing: -0.025em;
+    color: #1d1d1f; margin-bottom: 10px; line-height: 1.2;
+  }
+  .preface-body {
+    font-size: 13px; color: #6e6e73; line-height: 1.65;
+    max-width: 640px; margin-bottom: 24px;
+  }
+  .preface-grid {
+    display: flex; border: 1px solid #d2d2d7; border-radius: 10px; overflow: hidden;
+  }
+  .preface-col { flex: 1; padding: 16px 20px; }
+  .preface-col:not(:last-child) { border-right: 1px solid #d2d2d7; }
+  .preface-col-label {
+    font-size: 10px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.08em; margin-bottom: 12px;
+  }
+  .preface-live { color: #166534; }
+  .preface-blocked { color: #92400e; }
+  .preface-item {
+    font-size: 12px; color: #1d1d1f; padding: 5px 0;
+    border-bottom: 1px solid #f0f0f0; line-height: 1.45;
+  }
+  .preface-item:last-child { border-bottom: none; }
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <div>
+    <div class="page-title">Cousin Labs OS</div>
+    <div class="page-sub">Paul call prep — system overview, Notion DBs, and multi-client scale</div>
+  </div>
+  <div class="page-date">June 25, 2026</div>
+</div>
+
+<!-- ═══ 0. PREFACE ═══ -->
+<div class="section">
+  <div class="preface-headline">Brains → Action → Accountability</div>
+  <div class="preface-body">Claude can read Google Sheets fine. Writing back is a different story: API issues, schema mismatches, slow feedback loop. The fix was always generate a new file — which turned into a pile of versioned artifacts nobody could find. Notion solves the write side. One record, updated in place, team-facing and queryable like the repo.</div>
+  <div class="preface-grid">
+    <div class="preface-col">
+      <div class="preface-col-label preface-live">Live in Notion</div>
+      <div class="preface-item">Speak Paid Testing Tracker — all ads launched, testing phases, debrief linked</div>
+      <div class="preface-item">Debriefs DB — 20 records linked to Testing Tracker by CL ID</div>
+      <div class="preface-item">Weekly KPI Log — running log, newest at top</div>
+      <div class="preface-item">Creator Roster + Recruitment DB</div>
+      <div class="preface-item">Scrape + classification pipeline (viral.app → Gemini → data)</div>
+    </div>
+    <div class="preface-col">
+      <div class="preface-col-label preface-blocked">Blocked without Notion build</div>
+      <div class="preface-item">Brief IDs — Concepts DB doesn't exist yet</div>
+      <div class="preface-item">CL ID → Brief marriage — no record to write to</div>
+      <div class="preface-item">Producer views — team navigates in chat, not a dashboard</div>
+      <div class="preface-item">Cross-session debrief learning — verdicts don't accumulate</div>
+      <div class="preface-item">Ladder expansion — same DBs, filtered views not built</div>
+    </div>
+    <div class="preface-col">
+      <div class="preface-col-label" style="color:#1d1d1f;">What's next</div>
+      <div class="preface-item">Concepts DB — pitching, approvals, PM layer</div>
+      <div class="preface-item">Concept rationale → performance reporting → next brief, in one place</div>
+      <div class="preface-item">Cross-team application if paid + organic are treated as one content program</div>
+      <div class="preface-item">July goal: production tracking moves from Sheets to Notion (Speak pilot, Ladder dated to follow)</div>
+      <div class="preface-item">IRL NYC workshop to finalize DB structure with the team</div>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ 1. THE SYSTEM ═══ -->
+<div class="section">
+  <div class="section-title">1 · The System</div>
+
+  <div class="sys-row">
+
+    <!-- Repo -->
+    <div class="m-layer m-repo sys-node">
+      <div class="m-header">
+        <span class="m-icon">📐</span>
+        <div>
+          <div class="m-role">The Blueprints</div>
+          <div class="m-title">Repo</div>
+        </div>
+      </div>
+      <div class="m-body">Schema, data models, taxonomy, rules. Claude reads this. It never changes on its own.</div>
+      <div class="m-sublabel">Schema includes</div>
+      <div class="skill-chips">
+        <span class="skill-chip">15-col taxonomy</span>
+        <span class="skill-chip">The Board</span>
+        <span class="skill-chip">win definitions</span>
+        <span class="skill-chip">hook library</span>
+        <span class="skill-chip">persona schema</span>
+      </div>
+    </div>
+
+    <!-- Arrow: Repo ↔ Claude -->
+    <div class="sys-connector">
+      <svg width="50" height="30" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="8,11 3,15 8,19" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="3" y1="15" x2="47" y2="15" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+        <polyline points="42,11 47,15 42,19" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="sys-conn-label">reads<br>context</div>
+    </div>
+
+    <!-- Claude -->
+    <div class="m-layer m-claude sys-node">
+      <div class="m-header">
+        <span class="m-icon">⚡</span>
+        <div>
+          <div class="m-role" style="color:#b0006c;">The Engine</div>
+          <div class="m-title">Claude</div>
+        </div>
+      </div>
+      <div class="m-body">Reads the repo, does the thinking, writes to Notion. The only moving part.</div>
+      <div class="m-sublabel">Skills built in</div>
+      <div class="skill-chips">
+        <span class="skill-chip">creator-csv</span>
+        <span class="skill-chip">brief generator</span>
+        <span class="skill-chip">debrief</span>
+        <span class="skill-chip">strategy generator</span>
+        <span class="skill-chip">weekly report</span>
+        <span class="skill-chip">scorecard</span>
+      </div>
+    </div>
+
+    <!-- Arrow: Claude ↔ Notion -->
+    <div class="sys-connector">
+      <svg width="50" height="30" viewBox="0 0 50 30" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <polyline points="8,11 3,15 8,19" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <line x1="3" y1="15" x2="47" y2="15" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+        <polyline points="42,11 47,15 42,19" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <div class="sys-conn-label">outputs<br>results</div>
+    </div>
+
+    <!-- Notion -->
+    <div class="m-layer m-notion sys-node">
+      <div class="m-header">
+        <span class="m-icon">🧭</span>
+        <div>
+          <div class="m-role" style="color:#14532d;">The Cockpit</div>
+          <div class="m-title">Notion</div>
+        </div>
+      </div>
+      <div class="m-body">Where the team reads outputs, logs briefs, tracks results. Static without Claude.</div>
+      <div class="m-sublabel">Tracks</div>
+      <div class="skill-chips">
+        <span class="skill-chip">Concepts DB</span>
+        <span class="skill-chip">Testing Tracker</span>
+        <span class="skill-chip">Debrief Log</span>
+        <span class="skill-chip">Creator Roster</span>
+        <span class="skill-chip">Decision Log</span>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="metaphor-note">Repo and Notion don't talk to each other. Claude is always in the middle.</div>
+</div>
+
+
+<!-- ═══ 2. AD DATA FLOW ═══ -->
+<div class="section">
+  <div class="section-title">2 · Ad Data Flow — From Brief to Learning</div>
+
+  <!-- Top row: flow nodes -->
+  <div class="adf-wrap">
+
+    <div class="adf-row">
+
+      <div class="adf-node adf-insights">
+        <div class="adf-top">
+          <div class="adf-icon">🔍</div>
+          <div class="adf-label">Insights</div>
+          <div class="adf-sub">Winning cells, fatiguing formats, coverage gaps</div>
+        </div>
+        <div class="adf-raci raci-both">Claude + Human</div>
+        <div class="adf-db">Repo · Spine</div>
+      </div>
+
+      <div class="adf-arrow">→</div>
+
+      <div class="adf-node adf-brief">
+        <div class="adf-top">
+          <div class="adf-icon">💡</div>
+          <div class="adf-label">Brief</div>
+          <div class="adf-sub">Concept + cell defined · Brief ID created</div>
+        </div>
+        <div class="adf-raci raci-both">Claude + Human</div>
+        <div class="adf-db">Concepts DB</div>
+      </div>
+
+      <div class="adf-arrow">→</div>
+
+      <div class="adf-node adf-asset">
+        <div class="adf-top">
+          <div class="adf-icon">🎬</div>
+          <div class="adf-label">Asset Delivered</div>
+          <div class="adf-sub">Creator delivers · CL ID assigned · Brief → CL marriage</div>
+        </div>
+        <div class="adf-raci raci-human">Human confirms</div>
+        <div class="adf-db">Concepts DB</div>
+      </div>
+
+      <div class="adf-arrow">→</div>
+
+      <div class="adf-node adf-tag">
+        <div class="adf-top">
+          <div class="adf-icon">⚡</div>
+          <div class="adf-label">Scrape + Tag</div>
+          <div class="adf-sub">viral.app + Apify scrape · Claude classifies 15-col taxonomy</div>
+        </div>
+        <div class="adf-raci raci-ai">Claude (auto)</div>
+        <div class="adf-db">creator-csv skill · Spine</div>
+      </div>
+
+      <div class="adf-arrow">→</div>
+
+      <div class="adf-node adf-launch">
+        <div class="adf-top">
+          <div class="adf-icon">🚀</div>
+          <div class="adf-label">Launch (Meta)</div>
+          <div class="adf-sub">Ad goes live · spend begins · launch record created</div>
+        </div>
+        <div class="adf-raci raci-human">Human</div>
+        <div class="adf-db">Spine (Launch record)</div>
+      </div>
+
+      <div class="adf-arrow">→</div>
+
+      <div class="adf-node adf-perf">
+        <div class="adf-top">
+          <div class="adf-icon">📊</div>
+          <div class="adf-label">Performance In</div>
+          <div class="adf-sub">SP Score · P1/P2 · ITR · Spend · CPM</div>
+        </div>
+        <div class="adf-raci raci-ai">Claude (auto)</div>
+        <div class="adf-db">Paid Testing Tracker</div>
+      </div>
+
+      <div class="adf-arrow">→</div>
+
+      <div class="adf-node adf-debrief">
+        <div class="adf-top">
+          <div class="adf-icon">🧠</div>
+          <div class="adf-label">Debrief</div>
+          <div class="adf-sub">Scores vs win_def · verdict · bet outcome logged</div>
+        </div>
+        <div class="adf-raci raci-both">Claude + Human</div>
+        <div class="adf-db">Debrief Log</div>
+      </div>
+
+    </div>
+
+    <!-- Return loop -->
+    <div class="adf-return-wrap">
+      <div class="adf-return-line"></div>
+      <div class="adf-return-label">← learning flows back → updates cell posteriors → sharpens next brief</div>
+      <div class="adf-return-line"></div>
+    </div>
+
+    <!-- Data that travels end-to-end -->
+    <div class="adf-spine-row">
+      <div class="adf-spine-label">What travels the full loop:</div>
+      <div class="adf-spine-chips">
+        <span class="adf-chip">Brief ID</span>
+        <span class="adf-chip">CL ID (c1)</span>
+        <span class="adf-chip">Cell (creator × format × scenario)</span>
+        <span class="adf-chip">Persona</span>
+        <span class="adf-chip">Hook Type</span>
+        <span class="adf-chip">SP Score</span>
+        <span class="adf-chip">P1 / P2 result</span>
+        <span class="adf-chip">ITR</span>
+        <span class="adf-chip">Bet verdict</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ 3. PRODUCER WORKFLOW ═══ -->
+<div class="section">
+  <div class="section-title">3 · Producer Workflow — Step by Step</div>
+
+  <div class="workflow-grid">
+
+    <div class="wf-step s-brief" style="background:#f0fdfa; border-color:#99f6e4;">
+      <span class="badge badge-both">Human + AI</span>
+      <div class="wf-title">0 · Insights Review</div>
+      <div class="wf-body">Claude reads the spine and surfaces winning cells, fatiguing formats, unexplored coverage gaps. Producer reviews and applies context (creator availability, brand moment, team capacity). Informs what gets briefed.</div>
+      <div class="db-chips">
+        <span class="db-chip">🗄️ Spine</span>
+        <span class="db-chip">📐 Repo (schema)</span>
+      </div>
+    </div>
+
+    <div class="wf-step s-cast">
+      <span class="badge badge-both">Human + AI</span>
+      <div class="wf-title">1 · Brief Creation</div>
+      <div class="wf-body">Producer defines cell (creator × format × scenario). Claude generates brief skeleton from library coverage + probability map. Brief ID created here: first record in Concepts DB.</div>
+      <div class="db-chips">
+        <span class="db-chip">💡 Concepts DB</span>
+        <span class="db-chip">👥 Creator Roster</span>
+      </div>
+    </div>
+
+    <div class="wf-arrow-row">↓</div>
+
+    <div class="wf-step s-cast">
+      <span class="badge badge-human">Human</span>
+      <div class="wf-title">2 · Creator Casting</div>
+      <div class="wf-body">Producer selects creator from roster. Claude surfaces scorecard: prior performance on this cell, variance tier, win rate. Human makes the call.</div>
+      <div class="db-chips">
+        <span class="db-chip">👥 Creator Roster</span>
+        <span class="db-chip">🎯 Brand Engagement</span>
+      </div>
+    </div>
+
+    <div class="wf-step s-deliver">
+      <span class="badge badge-both">Human + AI</span>
+      <div class="wf-title">3 · Asset Delivery + CL ID Marriage</div>
+      <div class="wf-body">Creator delivers asset. Claude suggests Brief → Creative match. <strong>Human confirms.</strong> c1 ID assigned. Brief ID and CL ID are married at this step, not before.</div>
+      <div class="db-chips">
+        <span class="db-chip">💡 Concepts DB</span>
+        <span class="db-chip">🧪 Paid Testing Tracker</span>
+      </div>
+    </div>
+
+    <div class="wf-arrow-row">↓</div>
+
+    <div class="wf-step s-classify">
+      <span class="badge badge-ai">AI (auto)</span>
+      <div class="wf-title">4 · Scrape + Tag</div>
+      <div class="wf-body">creator-csv skill runs: viral.app pulls metrics → Apify scrapes video metadata → Claude classifies against 15-column taxonomy. Tags hook, format, persona, scenario. Deposits to spine.</div>
+      <div class="db-chips">
+        <span class="db-chip">🗄️ Spine</span>
+      </div>
+    </div>
+
+    <div class="wf-step s-brief" style="background:#fffbeb; border-color:#fde68a;">
+      <span class="badge badge-human">Human</span>
+      <div class="wf-title">5 · Launch (Meta)</div>
+      <div class="wf-body">Ad goes live in Meta. Spend begins. Launch record created in spine, tied to the Creative via CL ID. This is the moment the bet becomes testable.</div>
+      <div class="db-chips">
+        <span class="db-chip">🗄️ Spine (Launch record)</span>
+      </div>
+    </div>
+
+    <div class="wf-arrow-row">↓</div>
+
+    <div class="wf-step s-debrief">
+      <span class="badge badge-ai">AI (auto)</span>
+      <div class="wf-title">6 · Performance In</div>
+      <div class="wf-body">Results flow in. Claude pulls SP Score, P1/P2, ITR, spend, CPM into the Paid Testing Tracker, matched to the CL ID and Concept record.</div>
+      <div class="db-chips">
+        <span class="db-chip">🧪 Paid Testing Tracker</span>
+      </div>
+    </div>
+
+    <div class="wf-step s-strat">
+      <span class="badge badge-both">Human reviews AI output</span>
+      <div class="wf-title">7 · Debrief + Strategy</div>
+      <div class="wf-body">Claude scores vs win_definition, drafts bet verdict (confirmed / refuted / inconclusive), logs to Debrief Log. Adjudication collapses Launches → Creatives. Producer reviews before it feeds back to the strategy generator and next month's briefs.</div>
+      <div class="db-chips">
+        <span class="db-chip">📊 Debrief Log</span>
+        <span class="db-chip">🧪 Paid Testing Tracker</span>
+        <span class="db-chip">🗄️ Spine</span>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- ═══ 4. NOTION DB MAP ═══ -->
+<div class="section">
+  <div class="section-title">4 · Notion Database Relationships</div>
+
+  <div class="db-layout">
+    <div class="db-5col">
+
+      <!-- Col 1: Recruitment (vertically centered) -->
+      <div class="db-c1">
+        <div class="db-card c-recruit">
+          <div class="card-head">
+            <span class="card-badge-label">Already Exists</span>
+            <span class="card-name">🤝 Recruitment</span>
+            <span class="card-desc">Sourcing funnel. Signed creators graduate to Roster.</span>
+          </div>
+          <div class="card-fields">
+            <span class="f">Application</span>
+            <span class="f">Outreach Status</span>
+            <span class="f fk">→ Creator (link)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 2: Arrow only -->
+      <div class="db-c2">
+        <svg width="36" height="20" viewBox="0 0 36 20" fill="none">
+          <line x1="2" y1="10" x2="34" y2="10" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+          <polyline points="28,5 34,10 28,15" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="db-carr-label">graduates<br>to</div>
+      </div>
+
+      <!-- Col 3: Creator Roster + views (vertically centered) -->
+      <div class="db-c3">
+        <div class="db-card c-roster">
+          <div class="card-head">
+            <span class="card-badge-label">Keep &amp; Clean</span>
+            <span class="card-name">🗃️ Creator Roster</span>
+            <span class="card-desc">Brand-agnostic identity.<br>One record per person, forever.</span>
+          </div>
+          <div class="card-fields">
+            <span class="f">Creator Name</span><span class="f">Email / Handle</span>
+            <span class="f">Gender / Ethnicity</span><span class="f">Personal Profile</span>
+            <span class="f">TikTok Login</span><span class="f">Producer (person)</span>
+            <span class="f">Persona</span><span class="f">CL Notes</span>
+          </div>
+        </div>
+        <div class="db-vdash"></div>
+        <div class="db-views-block">
+          <div class="db-views-label-sm">Filtered Views</div>
+          <div class="db-views-row-sm">
+            <div class="db-view-chip-sm">All Creators</div>
+            <div class="db-view-chip-sm">Speak ↓</div>
+            <div class="db-view-chip-sm">Ladder ↓</div>
+            <div class="db-view-chip-sm">JRB ↓</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Col 4: Arrow only -->
+      <div class="db-c4">
+        <svg width="36" height="20" viewBox="0 0 36 20" fill="none">
+          <line x1="2" y1="10" x2="34" y2="10" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round"/>
+          <polyline points="28,5 34,10 28,15" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <div class="db-carr-label">links<br>to all</div>
+      </div>
+
+      <!-- Col 5: Brand Engagement (top) + paid pipeline (below) -->
+      <div class="db-c5">
+
+        <div class="db-card c-engage">
+          <div class="card-head">
+            <span class="card-badge-label">Split Out</span>
+            <span class="card-name">🎯 Brand Engagement</span>
+            <span class="card-desc">One record per creator-brand pair. Organic program logistics.</span>
+          </div>
+          <div class="card-fields">
+            <span class="f">Program Phase</span>
+            <span class="f">View Target</span>
+            <span class="f">Monthly Rate</span>
+            <span class="f">Videos / Month</span>
+            <span class="f">Status</span>
+            <span class="f fk">→ Creator (link)</span>
+            <span class="f fk">→ Brand</span>
+          </div>
+        </div>
+
+        <div class="db-col3-divider">Paid pipeline</div>
+
+        <div class="db-card c-concept">
+          <div class="card-head">
+            <span class="card-badge-label">Build New</span>
+            <span class="card-name">💡 Concepts DB</span>
+            <span class="card-desc">One record per creative concept. Brief ID lives here first.</span>
+          </div>
+          <div class="card-fields">
+            <span class="f">Concept Name</span>
+            <span class="f">Brief ID</span>
+            <span class="f">CL ID (c1)</span>
+            <span class="f">Cell (format × scenario)</span>
+            <span class="f">Persona</span>
+            <span class="f">Hook Type</span>
+            <span class="f ai">Claude Brief Draft</span>
+            <span class="f fk">→ Creator (link)</span>
+            <span class="f fk">→ Brand</span>
+          </div>
+        </div>
+
+        <div class="db-col3-v-conn">
+          <div class="db-col3-v-line"></div>
+          <svg width="10" height="7" viewBox="0 0 10 7" fill="none"><polyline points="1,1 5,6 9,1" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="db-col3-v-label">feeds</div>
+        </div>
+
+        <div class="db-card c-testing">
+          <div class="card-head">
+            <span class="card-badge-label">Already Exists</span>
+            <span class="card-name">🧪 Paid Testing Tracker</span>
+            <span class="card-desc">Pulls from Concepts. Adds performance outcomes.</span>
+          </div>
+          <div class="card-fields">
+            <span class="f">SP Score</span>
+            <span class="f">P1 / P2 Result</span>
+            <span class="f">ITR</span>
+            <span class="f">Spend</span>
+            <span class="f">Batch</span>
+            <span class="f fk">→ Concept (link)</span>
+            <span class="f fk">→ Creator (link)</span>
+          </div>
+        </div>
+
+        <div class="db-col3-v-conn">
+          <div class="db-col3-v-line"></div>
+          <svg width="10" height="7" viewBox="0 0 10 7" fill="none"><polyline points="1,1 5,6 9,1" stroke="#cbd5e1" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <div class="db-col3-v-label">feeds</div>
+        </div>
+
+        <div class="db-card c-debrief">
+          <div class="card-head">
+            <span class="card-badge-label">Already Exists</span>
+            <span class="card-name">📊 Debrief Log</span>
+            <span class="card-desc">Performance verdicts + bet outcomes.</span>
+          </div>
+          <div class="card-fields">
+            <span class="f">Verdict</span>
+            <span class="f">Bet Outcome</span>
+            <span class="f">Week</span>
+            <span class="f ai">Claude Summary</span>
+            <span class="f fk">→ Testing Tracker</span>
+            <span class="f fk">→ Creator (link)</span>
+          </div>
+        </div>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+
+
+<!-- ═══ 4. THIN ADAPTER ═══ -->
+<div class="section">
+  <div class="section-title">5 · Multi-Client Scale — Thin Adapter</div>
+
+  <div class="spine-bar">
+    <div class="spine-bar-title">🗄️ The Spine — Universal Core (built once)</div>
+    <div class="spine-pills">
+      <span class="spine-pill">Fingerprinting &amp; Identity</span>
+      <span class="spine-pill">Creative ↔ Launch Model</span>
+      <span class="spine-pill">Universal Taxonomy</span>
+      <span class="spine-pill">Probability Map Logic</span>
+      <span class="spine-pill">Allocation Rule</span>
+      <span class="spine-pill">Hypothesis Thread</span>
+    </div>
+  </div>
+
+  <div class="adapter-arrow">↓ thin adapter per client — ~10% of the work ↓</div>
+
+  <div class="adapter-grid">
+
+    <div class="adapter-card ad-speak">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+        <div class="adapter-title" style="margin:0;">Speak</div>
+        <span class="status-pill s-live" style="margin:0;">Active</span>
+      </div>
+      <div class="adapter-section-label">Taxonomy</div>
+      <div class="adapter-item">Personas — Gringo, Leah, Adrian, etc.</div>
+      <div class="adapter-item">7 lineage tags</div>
+      <div class="adapter-item">c1 naming convention</div>
+      <div class="adapter-section-label">Testing Structure</div>
+      <div class="adapter-item">P1 → P2 → BAU phase model</div>
+      <div class="adapter-item">ITR as graduation signal</div>
+      <div class="adapter-section-label">KPI Goals</div>
+      <div class="adapter-item">SP Score as win definition</div>
+      <div class="adapter-item">P2+BAU benchmarks defined</div>
+    </div>
+
+    <div class="adapter-card ad-ladder">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+        <div class="adapter-title" style="margin:0;">Ladder</div>
+        <span class="status-pill s-build" style="margin:0;">In Build</span>
+      </div>
+      <div class="adapter-section-label">Taxonomy</div>
+      <div class="adapter-item">Personas — TBD</div>
+      <div class="adapter-item">Dated ad program structure</div>
+      <div class="adapter-item">2-tier coach framework</div>
+      <div class="adapter-section-label">Testing Structure</div>
+      <div class="adapter-item">Bi-weekly testing cadence</div>
+      <div class="adapter-section-label">KPI Goals</div>
+      <div class="adapter-item">Win definition — TBD</div>
+      <div class="adapter-item">Benchmarks — TBD</div>
+    </div>
+
+    <div class="adapter-card ad-jrb">
+      <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:10px;">
+        <div class="adapter-title" style="margin:0;">Jones Road Beauty</div>
+        <span class="status-pill s-future" style="margin:0;">Future</span>
+      </div>
+      <div class="adapter-section-label">Taxonomy</div>
+      <div class="adapter-item">Personas — TBD</div>
+      <div class="adapter-item">Naming convention — TBD</div>
+      <div class="adapter-section-label">Testing Structure</div>
+      <div class="adapter-item">Spec not started</div>
+      <div class="adapter-section-label">KPI Goals</div>
+      <div class="adapter-item">Win definition — TBD</div>
+      <div class="adapter-item">Benchmarks — TBD</div>
+    </div>
+
+  </div>
+
+  <div class="adapter-note">
+    Each adapter follows the same structure (Taxonomy, Testing Structure, KPI Goals), so producers know exactly what context exists for each client and where to find it. The values differ per client. The shape stays consistent.
+  </div>
+</div>
+
+<!-- ═══ 6. NEXT STEPS ═══ -->
+<div class="section">
+  <div class="section-title">6 · Notion DB Build — Next Steps</div>
+  <div style="font-size:11px; color:var(--text-secondary); margin-bottom:20px;">IRL workshop prep with Wade: aligning on DB structure before building. Wade owns usability.</div>
+
+  <div class="steps-wrap">
+
+    <div class="step-row">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Build the Concepts DB</div>
+        <div class="step-desc">The missing link between Creator Roster and Paid Testing Tracker. Brief ID gets created here first, before a CL ID exists. Fields to define: Concept Name, Brief ID, CL ID, Cell (format × scenario), Persona, Hook Type, Claude Brief Draft. Relations to wire: → Creator Roster, → Brand, → Paid Testing Tracker.</div>
+        <div class="step-tags"><span class="stag stag-notion">Notion build</span><span class="stag stag-design">New DB</span></div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">Lock the Brief ID → CL ID handoff</div>
+        <div class="step-desc">When does the Brief ID in Concepts DB get married to the CL ID? Right now it's informal: the IDs exist in separate places with no defined moment of connection. Needs a named step in the workflow and a named owner. Wade and producer to align on this at the workshop before the DB goes live.</div>
+        <div class="step-tags"><span class="stag stag-process">Workflow design</span><span class="stag stag-human">Human gate</span></div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Wire Debrief Log → Decision Log</div>
+        <div class="step-desc">Standing decisions that come out of a debrief (retire a format, double down on a cell) currently live nowhere queryable. Add a relation from Debrief Log to the existing Decision Log DB so those calls are captured once and stay visible across future briefs.</div>
+        <div class="step-tags"><span class="stag stag-notion">Notion build</span><span class="stag stag-design">Relation</span></div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">Build Ladder filtered views across existing DBs</div>
+        <div class="step-desc">Creator Roster, Paid Testing Tracker, Brand Engagement, and Debrief Log all need a Ladder-scoped view. Same databases, new client filter, not a new system. Once Ladder personas and testing structure are defined, the views follow in an afternoon. This is the first real proof of the thin adapter working.</div>
+        <div class="step-tags"><span class="stag stag-notion">Notion build</span><span class="stag stag-ladder">Ladder</span></div>
+      </div>
+    </div>
+
+    <div class="step-row">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Build a usability guide in Notion</div>
+        <div class="step-desc">One internal page that answers: what tool do you use for what? Creator Bot for quick lookups. Claude Code + repo for analysis and documents. Notion for tracking and outputs. Right now producers figure this out by fumbling. A single baked read, consistent across views and linked from the hub, removes that friction without handing the system map to clients.</div>
+        <div class="step-tags"><span class="stag stag-notion">Notion build</span><span class="stag stag-design">Internal</span></div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<div class="footer">
+  Cousin Labs OS · cousins-os repo · June 2026
+</div>
+
+</body>
+</html>
